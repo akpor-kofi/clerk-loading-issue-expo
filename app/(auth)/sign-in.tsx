@@ -1,10 +1,11 @@
-import { useSignIn } from '@clerk/clerk-expo';
+import {useSignIn, useSSO} from '@clerk/clerk-expo';
 import { Link, useRouter } from 'expo-router';
-import { Text, TextInput, Button, View } from 'react-native';
+import {Text, TextInput, Button, View, Pressable} from 'react-native';
 import React from 'react';
 
 export default function Page() {
   const { signIn, setActive, isLoaded } = useSignIn();
+    const { startSSOFlow } = useSSO();
   const router = useRouter();
 
   const [emailAddress, setEmailAddress] = React.useState('');
@@ -52,6 +53,25 @@ export default function Page() {
         secureTextEntry={true}
         onChangeText={(password) => setPassword(password)}
       />
+
+        <Pressable onPress={async () => {
+            try {
+                const {createdSessionId, setActive} = await startSSOFlow({
+                    strategy: 'oauth_google',
+                })
+
+                if (createdSessionId) {
+                    setActive!({ session: createdSessionId });
+                } else {
+                    // TODO: handle this with signIn/signUp later
+                }
+            } catch (err) {
+                console.error(err);
+            }
+
+        }}>
+            <Text>google</Text>
+        </Pressable>
       <Button title="Sign in" onPress={onSignInPress} />
       <View>
         <Text>Don't have an account?</Text>
