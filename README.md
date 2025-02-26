@@ -37,12 +37,6 @@ This repository demonstrates an issue where adding the `__experimental_resourceC
 - On **iOS (Simulator & Real Device)**: A **blank white screen** is displayed.
 - On **Android**: A **blank white screen** is displayed.
 
-## Other Noticable Error Logs
-
-```bash
-Error: Unable to resolve module ./npm/@clerk/clerk-js@5/dist/clerk.browser
-from /Users/mac/Documents/workspace/business-copilot/business-copilot-webapp/.
-```
 
 ## Additional Notes
 

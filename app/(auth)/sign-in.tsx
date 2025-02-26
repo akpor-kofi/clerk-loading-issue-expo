@@ -1,4 +1,4 @@
-import {useSignIn, useSSO} from '@clerk/clerk-expo';
+import {isClerkRuntimeError, useSignIn, useSSO} from '@clerk/clerk-expo';
 import { Link, useRouter } from 'expo-router';
 import {Text, TextInput, Button, View, Pressable} from 'react-native';
 import React from 'react';
@@ -35,6 +35,9 @@ export default function Page() {
     } catch (err) {
       // See https://clerk.com/docs/custom-flows/error-handling
       // for more info on error handling
+        if (isClerkRuntimeError(err) && err.code === 'network_error') {
+            console.error('Network error occurred!')
+        }
       console.error(JSON.stringify(err, null, 2));
     }
   }, [isLoaded, emailAddress, password]);
